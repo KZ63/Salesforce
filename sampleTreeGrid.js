@@ -10,6 +10,7 @@ export default class SampleTreeGrid extends LightningElement {
   
   accounts;
 
+  // コメントを追加
   connectedCallback() {
     getAccountWithContact()
     .then(data => {
