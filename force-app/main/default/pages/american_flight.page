@@ -1,0 +1,66 @@
+<apex:page controller="americanFlightController" showHeader="false" sidebar="false" standardStylesheets="false" action="{!doinit}">
+  <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="ja">
+  <apex:slds />
+  <style>
+    table, th, td {
+      border: 1px solid #333;
+    }
+    table {
+      counter-reset: rowCount;
+    }
+
+    table > tbody > tr {
+      counter-increment: rowCount;
+    }
+
+    table > tbody > tr > td:first-child::before {
+      content: counter(rowCount);
+    }
+  </style>
+
+  <body>
+    <div class="slds-scope">
+      <div class="slds-media__figure ">
+        <svg aria-hidden="true" class="slds-icon slds-page-header__icon slds-icon-standard-account">
+          <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#contact')}"></use>
+        </svg>
+        <h1>フライト情報</h1>
+      </div>
+    </div>
+    <table style="width: 500px;">
+      <thead>
+        <tr>
+          <th></th>
+          <th colspan="1">ID</th>
+          <th colspan="1">code</th>
+          <th colspan="1">price</th>
+          <th colspan="1">departureDate</th>
+          <th colspan="1">origin</th>
+          <th colspan="1">destination</th>
+          <th colspan="1">emptySeats</th>
+          <th colspan="1">type</th>
+          <th colspan="1">totalSeats</th>
+        </tr>
+      </thead>
+      <tbody>
+        <apex:repeat value="{!flightList}" var="flight">
+          <tr>
+            <td></td>
+            <td>{!flight.Id}</td>
+            <td>ER38sd</td>
+            <td>400</td>
+            <td>2017/07/26</td>
+            <td>CLE</td>
+            <td>SFO</td>
+            <td>0</td>
+            <td>Boeing 737</td>
+            <td>150</td>
+          </tr>
+        </apex:repeat>
+        
+      </tbody>
+    </table>
+  </body>
+  
+  </html>
+</apex:page>

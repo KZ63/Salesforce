@@ -1,0 +1,11 @@
+<template>
+    <lightning-card title="Account List" icon-name="custom:custom1">
+      <div class="slds-m-around_medium" onaccountselect={handleAccountSelect}>
+        <template if:true={account.data}>
+          <template for:each={account.data} for:item="acc">
+            <c-account-list-item key={acc.Id} account={acc}></c-account-list-item>
+          </template>
+        </template>
+      </div>
+    </lightning-card>
+</template>
