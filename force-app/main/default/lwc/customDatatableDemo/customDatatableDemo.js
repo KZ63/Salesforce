@@ -1,5 +1,8 @@
 import { LightningElement, track } from 'lwc';
 import getAccountListWithRating from '@salesforce/apex/AccountTableViewController.getAccountListWithRating';
+import { refreshApex } from '@salesforce/apex';
+import { updateRecord } from 'lightning/uiRecordApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class CustomDatatableDemo extends LightningElement {
   @track data = [];
@@ -76,9 +79,11 @@ export default class CustomDatatableDemo extends LightningElement {
   picklistChanged(event) {
     event.stopPropagation();
     let dataRecieved = event.detail.data;
+    console.log('◆' + dataRecieved.context);
+    console.log('◆' + dataRecieved.value);
     let updatedItem = { Id: dataRecieved.context, Rating: dataRecieved.value };
     this.updateDraftValues(updatedItem);
-    this.updateDataValues(updatedItem);
+    // this.updateDataValues(updatedItem);
   }
 
   //handler to handle cell changes & update values in draft values
@@ -87,9 +92,31 @@ export default class CustomDatatableDemo extends LightningElement {
   }
 
   handleSave(event) {
-      console.log('Updated items', this.draftValues);
-      //save last saved copy
-      this.lastSavedData = JSON.parse(JSON.stringify(this.data));
+    console.log('Updated items', this.draftValues);
+    //save last saved copy
+    //this.lastSavedData = JSON.parse(JSON.stringify(this.data));
+    const recordInputs =  event.detail.draftValues.slice().map(draft => {
+        const fields = Object.assign({}, draft);
+        return { fields };
+    });
+
+    const promises = recordInputs.map(recordInput => updateRecord(recordInput));
+    Promise.all(promises).then(accounts => {
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Success',
+                message: 'Accounts updated',
+                variant: 'success'
+            })
+        );
+        // Clear all draft values
+        this.draftValues = [];
+
+        // Display fresh data in the datatable
+        return refreshApex(this.data);
+    }).catch(error => {
+        // Handle error
+    });
   }
 
   handleCancel(event) {
