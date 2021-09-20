@@ -1,0 +1,22 @@
+{
+    "b2c2fc3b37": {
+        "component://@webruntime/app@ja": {
+            "dev": "c4f22d1679"
+        },
+        "component://localdevserver/preview@ja": {
+            "dev": "7de07fa518"
+        },
+        "component://c/showAccount@ja": {
+            "dev": "2c70210074"
+        },
+        "component://localdevserver/home@ja": {
+            "dev": "c0efafa63a"
+        },
+        "component://c/accountList@ja": {
+            "dev": ""
+        },
+        "component://c/opportunityTable@ja": {
+            "dev": "d0223e764e"
+        }
+    }
+}

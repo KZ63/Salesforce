@@ -1,0 +1,1 @@
+{"errors":[{"code":"","message":"Error during compilation: Could not load @salesforce/messageChannel/SampleMessageChannel__c (imported by c:\\Dev\\workspace\\Salesforce\\force-app\\main\\default\\lwc\\accountList\\accountList.js): You can't preview a component using Lightning Message Service. Test the component directly in the org."}]}
