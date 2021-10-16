@@ -33,7 +33,6 @@ export default class OpportunityTable extends NavigationMixin(LightningElement) 
     let row = event.detail.row;
     switch(actionName) {
       case 'details':
-        // navigate to record detail page
         this[NavigationMixin.Navigate]({
           type: 'standard__recordPage',
           attributes: {

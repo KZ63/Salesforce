@@ -43,21 +43,30 @@
         </tr>
       </thead>
       <tbody>
-        <apex:repeat value="{!flightList}" var="flight">
-          <tr>
-            <td></td>
-            <td>{!flight.Id}</td>
-            <td>ER38sd</td>
-            <td>400</td>
-            <td>2017/07/26</td>
-            <td>CLE</td>
-            <td>SFO</td>
-            <td>0</td>
-            <td>Boeing 737</td>
-            <td>150</td>
-          </tr>
-        </apex:repeat>
-        
+        <tr>
+          <td></td>
+          <td>1</td>
+          <td>ER38sd</td>
+          <td>400</td>
+          <td>2017/07/26</td>
+          <td>CLE</td>
+          <td>SFO</td>
+          <td>0</td>
+          <td>Boeing 737</td>
+          <td>150</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>2</td>
+          <td>ER38sd</td>
+          <td>400</td>
+          <td>2017/07/26</td>
+          <td>CLE</td>
+          <td>SFO</td>
+          <td>0</td>
+          <td>Boeing 737</td>
+          <td>150</td>
+        </tr>
       </tbody>
     </table>
   </body>

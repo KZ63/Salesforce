@@ -5,7 +5,7 @@ import DatatablePicklistTemplate from './customDataTable.html';
 import {
     loadStyle
 } from 'lightning/platformResourceLoader';
-import CustomDataTableResource from '@salesforce/resourceUrl/CustomDataTable';
+import CustomDataTableResource from '@salesforce/resourceUrl/customDataTable';
 
 export default class CustomDataTable extends LightningDatatable {
   static customTypes = {

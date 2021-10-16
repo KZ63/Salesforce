@@ -1,0 +1,28 @@
+<template>
+  <lightning-card title="DataTable" icon-name="custom:custom1">
+    <lightning-datatable
+      key-field="id"
+      data={accounts}
+      columns={columns}
+      hide-checkbox-column="true">
+    </lightning-datatable>
+    <div class="slds-m-around_medium">
+      <p class="slds-m-vertical_medium content">
+              {totalRecountCount}件中　{startingRecord}件～{endingRecord}件を表示中。
+              {page}/{totalPage}ページ</p>
+      <lightning-layout>
+        <!-- <template if:false={isFirstPage}> -->
+          <lightning-layout-item>
+              <lightning-button label="前へ" icon-name="utility:chevronleft" onclick={previousHandler} disabled={isFirstPage}></lightning-button>
+          </lightning-layout-item>
+        <!-- </template> -->
+        <lightning-layout-item flexibility="grow"></lightning-layout-item>
+        <!-- <template if:false={isLastPage}> -->
+          <lightning-layout-item>
+              <lightning-button label="次へ" icon-name="utility:chevronright" icon-position="right" onclick={nextHandler} disabled={isLastPage}></lightning-button>
+          </lightning-layout-item>
+        <!-- </template> -->
+    </lightning-layout>
+    </div>
+  </lightning-card>
+</template>

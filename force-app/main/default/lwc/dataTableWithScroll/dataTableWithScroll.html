@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title="取引先責任者" icon-name="custom:custom1">
+      <div class="slds-box" style="height:400px;">
+        <template if:true={contacts}>
+          <lightning-datatable
+            key-field="Id"
+            data={contacts}
+            columns={columns}
+            hide-checkbox-column
+            enable-infinite-loading
+            onloadmore={loadMoreData}>
+          </lightning-datatable>
+        </template>
+      </div>
+      ステータス：{loadMoreStatus}
+    </lightning-card>
+</template>

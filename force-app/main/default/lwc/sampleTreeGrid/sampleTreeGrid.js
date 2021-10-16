@@ -29,4 +29,3 @@ export default class SampleTreeGrid extends LightningElement {
       console.log(error))
   }
 }
-      

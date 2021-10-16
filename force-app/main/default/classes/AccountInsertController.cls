@@ -5,4 +5,3 @@ public with sharing class AccountInsertController {
         return acc;
     }
 }
-
