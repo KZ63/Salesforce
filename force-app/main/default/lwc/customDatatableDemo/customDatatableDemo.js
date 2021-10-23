@@ -1,8 +1,12 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
 import getAccountListWithRating from '@salesforce/apex/AccountTableViewController.getAccountListWithRating';
 import { refreshApex } from '@salesforce/apex';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import RATING from '@salesforce/schema/Account.Rating';
+import { getPicklistValuesByRecordType, getPicklistValues } from 'lightning/uiObjectInfoApi';
+import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+import ACCOUNT from '@salesforce/schema/Account';
 
 export default class CustomDatatableDemo extends LightningElement {
   @track data = [];
@@ -11,6 +15,28 @@ export default class CustomDatatableDemo extends LightningElement {
   @track draftValues = [];
 
   lastSavedData = [];
+  picklistValue;
+  options = [];
+
+  @wire(getObjectInfo, { objectApiName: ACCOUNT})
+  accountInfo;
+
+  @wire(getPicklistValuesByRecordType, { recordTypeId: '$accountInfo.data.defaultRecordTypeId', objectApiName: ACCOUNT})
+  ratingValues({data, error}){
+      if(data) {
+        console.log('Picklist:' + data.picklistFieldValues.Rating.values);
+        this.picklistValue = data.picklistFieldValues.Rating.values;
+        for(let i = 0; i < this.picklistValue.length; i++) {
+            console.log('選択' + JSON.stringify(this.picklistValue[i]));
+            console.log('ラベル' + this.picklistValue[i].label);
+            console.log('value' + this.picklistValue[i].value);
+            this.options.push({label: this.picklistValue[i].label, value: this.picklistValue[i].value});
+        }
+        console.log('option' + JSON.stringify(this.options));
+      } else if(error) {
+          console.log('error');
+      }
+  }
 
   connectedCallback() {
     this.columns = [
@@ -19,11 +45,7 @@ export default class CustomDatatableDemo extends LightningElement {
         { label: 'Phone', fieldName: 'phone', type: 'phone', editable: true },
         {
             label: 'Rating', fieldName: 'Rating', type: 'picklist', typeAttributes: {
-                placeholder: 'Choose rating', options: [
-                    { label: 'Hot', value: 'Hot' },
-                    { label: 'Warm', value: 'Warm' },
-                    { label: 'Cold', value: 'Cold' },
-                ] // list of all picklist options
+                placeholder: 'Choose rating', options: this.options
                 , value: { fieldName: 'Rating' } // default value for picklist
                 , context: { fieldName: 'Id' } // binding account Id with context variable to be returned back
             }
