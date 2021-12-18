@@ -10,39 +10,58 @@ import ACCOUNT from '@salesforce/schema/Account';
 
 export default class CustomDatatableDemo extends LightningElement {
   @track data = [];
-    //have this attribute to track data changed
-    //with custom picklist or custom lookup
   @track draftValues = [];
 
   lastSavedData = [];
   picklistValue;
   options = [];
+  recordType;
 
-  @wire(getObjectInfo, { objectApiName: ACCOUNT})
-  accountInfo;
+    @wire(getObjectInfo, { objectApiName: ACCOUNT})
+    opportunityInfo({data, error}) {
+    if(data) {
+        const rtis = data.recordTypeInfos;
+        //console.log(Object.keys(rtis).find(rti => rtis[rti].name === 'マスタ'));
+        this.recordType = Object.keys(rtis).find(rti => rtis[rti].name === 'マスタ');
+    } else if(error) {
+        console.log('error');
+    } 
+    }
 
-  @wire(getPicklistValuesByRecordType, { recordTypeId: '$accountInfo.data.defaultRecordTypeId', objectApiName: ACCOUNT})
+  @wire(getPicklistValuesByRecordType, { recordTypeId: '$recordType', objectApiName: ACCOUNT})
   ratingValues({data, error}){
       if(data) {
-        console.log('Picklist:' + data.picklistFieldValues.Rating.values);
+        // console.log('Picklist:' + data.picklistFieldValues.Rating.values);
         this.picklistValue = data.picklistFieldValues.Rating.values;
         for(let i = 0; i < this.picklistValue.length; i++) {
-            console.log('選択' + JSON.stringify(this.picklistValue[i]));
-            console.log('ラベル' + this.picklistValue[i].label);
-            console.log('value' + this.picklistValue[i].value);
+            // console.log('選択' + JSON.stringify(this.picklistValue[i]));
+            // console.log('ラベル' + this.picklistValue[i].label);
+            // console.log('value' + this.picklistValue[i].value);
             this.options.push({label: this.picklistValue[i].label, value: this.picklistValue[i].value});
         }
-        console.log('option' + JSON.stringify(this.options));
+        //console.log('option' + JSON.stringify(this.options));
+        this.setColumns();
+        getAccountListWithRating()
+            .then(data => {
+            this.data = data;
+            })
+            this.lastSavedData = JSON.parse(JSON.stringify(this.data));
+
       } else if(error) {
           console.log('error');
       }
   }
 
-  connectedCallback() {
+  setColumns() {
     this.columns = [
         { label: 'Name', fieldName: 'Name', editable: true },
         { label: 'Account Number', fieldName: 'AccountNumber', editable: true },
-        { label: 'Phone', fieldName: 'phone', type: 'phone', editable: true },
+        { label: '顧客番号', fieldName: 'customerNumber__c', type: 'inputtext',
+            typeAttributes: {
+                placeholder: '', value: { fieldName: 'customerNumber__c' } // default value for picklist
+                , context: { fieldName: 'Id' } // binding account Id with context variable to be returned back
+            } 
+        },
         {
             label: 'Rating', fieldName: 'Rating', type: 'picklist', typeAttributes: {
                 placeholder: 'Choose rating', options: this.options
@@ -51,15 +70,6 @@ export default class CustomDatatableDemo extends LightningElement {
             }
         }
     ];
-
-    getAccountListWithRating()
-    .then(data => {
-      this.data = data;
-    })
-    //sample data
-    // this.data = [{ 'Id': '12345', 'Name': 'Acme', 'AccountNumber': 'CD355119-A', 'Rating': 'Hot', phone: 12537 }, { 'Id': '34567', 'Name': 'Mace', 'AccountNumber': 'CD355120-A', 'Rating': 'Cold', phone: 1978234 }]
-    //save last saved copy
-    this.lastSavedData = JSON.parse(JSON.stringify(this.data));
   }
 
   updateDataValues(updateItem) {
@@ -108,6 +118,15 @@ export default class CustomDatatableDemo extends LightningElement {
     // this.updateDataValues(updatedItem);
   }
 
+  inputtextChanged(event) {
+    event.stopPropagation();
+    let dataRecieved = event.detail.data;
+    console.log('◆' + dataRecieved.context);
+    console.log('◆' + dataRecieved.value);
+    let updatedItem = { Id: dataRecieved.context, customerNumber__c: dataRecieved.value };
+    this.updateDraftValues(updatedItem);
+  }
+
   //handler to handle cell changes & update values in draft values
   handleCellChange(event) {
       this.updateDraftValues(event.detail.draftValues[0]);
@@ -138,6 +157,7 @@ export default class CustomDatatableDemo extends LightningElement {
         return refreshApex(this.data);
     }).catch(error => {
         // Handle error
+        console.log('errorMsg:' + JSON.stringify(error.body.output.fieldErrors.customerNumber__c));
     });
   }
 
