@@ -99,5 +99,33 @@
         "component://c/addressForm@ja": {
             "dev": "2f6b13ea79"
         }
+    },
+    "fb06074b67": {
+        "component://@webruntime/app@ja": {
+            "dev": "c4f22d1679"
+        },
+        "component://localdevserver/preview@ja": {
+            "dev": "7de07fa518"
+        },
+        "component://c/dataTableWithScroll@ja": {
+            "dev": "05cb1a869d"
+        }
+    },
+    "42d5ae3912": {
+        "component://@webruntime/app@ja": {
+            "dev": "c4f22d1679"
+        },
+        "component://localdevserver/preview@ja": {
+            "dev": "7de07fa518"
+        },
+        "component://c/datatableInput@ja": {
+            "dev": "2f17b4d40a"
+        },
+        "component://c/accountList@ja": {
+            "dev": ""
+        },
+        "component://c/caseTableView@ja": {
+            "dev": "914d14ce06"
+        }
     }
 }

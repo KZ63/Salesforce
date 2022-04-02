@@ -7,3 +7,9 @@ declare module "@salesforce/apex/AccountTableViewController.getAccountWithContac
 declare module "@salesforce/apex/AccountTableViewController.getAccountListWithRating" {
   export default function getAccountListWithRating(): Promise<any>;
 }
+declare module "@salesforce/apex/AccountTableViewController.getHotAccount" {
+  export default function getHotAccount(param: {rate: any}): Promise<any>;
+}
+declare module "@salesforce/apex/AccountTableViewController.updateAccount" {
+  export default function updateAccount(param: {rate: any}): Promise<any>;
+}

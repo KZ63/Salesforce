@@ -1,0 +1,15 @@
+<template>
+  <lightning-card>
+  <template if:true={wiredAccount.data}>
+      <template for:each={wiredAccount.data} for:item="acc" for:index="idx">
+          <div key={acc.Id} class="slds-m-bottom_medium">
+              <p>{idx}. {acc.Name}</p>
+              <p><lightning-formatted-text value={acc.Name}></lightning-formatted-text></p>
+              <p>種別：<lightning-formatted-text value={acc.Type}></lightning-formatted-text></p>
+              <p><lightning-badge label={acc.Rating}></lightning-badge></p>
+          </div>
+      </template>
+      <lightning-button label="Mark all as Prospect" onclick={handleClick}></lightning-button>
+  </template>
+</lightning-card>
+</template>

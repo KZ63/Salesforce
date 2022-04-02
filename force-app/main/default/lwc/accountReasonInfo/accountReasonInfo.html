@@ -1,0 +1,11 @@
+<template>
+    レコードページ
+    <lightning-record-edit-form object-api-name="Account">
+      <template if:true={isHigh}>
+        <lightning-input-field field-name="ReasonHigh__c"></lightning-input-field>
+      </template>
+      <template if:false={isHigh}>
+        <lightning-input-field field-name="ReasonLow__c"></lightning-input-field>
+      </template>
+    </lightning-record-edit-form>
+</template>
