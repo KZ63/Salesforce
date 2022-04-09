@@ -1,0 +1,39 @@
+<template>
+  <lightning-card title="入力チェック" icon-name="custom:custom1">
+    <div title="Validation Check">
+      <div class="slds-p-around_medium lgc-bg">
+        <p>必須チェック</p>
+        <lightning-input type="text" label="入力必須" required></lightning-input>
+      </div>
+    </div>
+    <div title="Validation Check">
+      <div class="slds-p-around_medium lgc-bg">
+        <p>メールアドレスの入力</p>
+        <lightning-input name="email" class="validate" type="email" label="メールアドレス" message-when-type-mismatch="email形式で入力してください。">
+        </lightning-input>
+      </div>
+    </div>
+    <div title="Validation Check">
+      <div class="slds-p-around_medium lgc-bg">
+        <p>生年月日の入力</p>
+        <lightning-input name="number" class="validate" type="number" label="生まれ年" max="2022" min="0">
+        </lightning-input>
+      </div>
+    </div>
+    <div title="Validation Check">
+      <div class="slds-p-around_medium lgc-bg">
+        <p>入力パターン</p>
+        <lightning-input name="num" class="validate" type="text" label="半角英数字のみ" pattern="^[0-9a-zA-Z]*$" message-when-pattern-mismatch="半角英数字のみで入力してください。">
+        </lightning-input>
+      </div>
+    </div>
+    <div title="Validation Check">
+      <div class="slds-p-around_medium lgc-bg">
+        <p>カスタムValidation</p>
+        <lightning-input name="email" class="customInput" type="text" label="カスタムインプット" onblur={register}>
+        </lightning-input>
+      </div>
+    </div>
+    <lightning-button style="text-align: center;" label="submit" onclick={validationCheck}></lightning-button>
+  </lightning-card>
+</template>
