@@ -37,4 +37,8 @@ export default class AccountInsert extends LightningElement {
         );
       });
   }
+
+  testFunction() {
+    console.log('test');
+  }
 }
